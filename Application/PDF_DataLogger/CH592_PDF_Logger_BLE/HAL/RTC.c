@@ -3,7 +3,7 @@
  * Author             : WCH
  * Version            : V1.2
  * Date               : 2022/01/18
- * Description        : RTC配置及其初始化
+ * Description        : RTC configuration and initialization
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
  * Attention: This software (modified or not) and binary are used for 
@@ -11,7 +11,7 @@
  *******************************************************************************/
 
 /******************************************************************************/
-/* 头文件包含 */
+/* Header file includes */
 #include "HAL.h"
 #include "flash_info.h"
 
@@ -30,9 +30,9 @@ volatile uint32_t RTCTigFlag;
 /*******************************************************************************
  * @fn      RTC_SetTignTime
  *
- * @brief   配置RTC触发时间
+ * @brief   Set RTC trigger time
  *
- * @param   time    - 触发时间.
+ * @param   time    - Trigger time value
  *
  * @return  None.
  */
@@ -47,7 +47,7 @@ void RTC_SetTignTime(uint32_t time)
 /*******************************************************************************
  * @fn      RTC_IRQHandler
  *
- * @brief   RTC中断处理
+ * @brief   RTC interrupt handler
  *
  * @param   None.
  *
@@ -64,7 +64,7 @@ void RTC_IRQHandler(void)
 /*******************************************************************************
  * @fn      SYS_GetClockValue
  *
- * @brief   获取RTC当前计数值
+ * @brief   Get RTC current counter value
  *
  * @param   None.
  *
@@ -85,7 +85,7 @@ static uint32_t SYS_GetClockValue(void)
 /*******************************************************************************
  * @fn      HAL_Time0Init
  *
- * @brief   系统定时器初始化
+ * @brief   System timer initialization
  *
  * @param   None.
  *
@@ -107,13 +107,13 @@ void HAL_TimeInit(void)
     R8_CK32K_CONFIG |= RB_CLK_OSC32K_XT | RB_CLK_INT32K_PON | RB_CLK_XT32K_PON;
     sys_safe_access_disable();
 #endif
-//    RTC_InitTime( 2020, 1, 1, 0, 0, 0 );    //RTC时钟初始化当前时间
+//    RTC_InitTime( 2020, 1, 1, 0, 0, 0 );    //RTC时锟接筹拷始锟斤拷锟斤拷前时锟斤拷
     RTC_InitTime(DeviceInfo.StartTime.Year,
                  (uint16_t)DeviceInfo.StartTime.Month,
                  (uint16_t)DeviceInfo.StartTime.Day,
                  (uint16_t)DeviceInfo.StartTime.Hour,
                  (uint16_t)DeviceInfo.StartTime.Minute,
-                 (uint16_t)DeviceInfo.StartTime.Second); //RTC时钟初始化当前时间
+                 (uint16_t)DeviceInfo.StartTime.Second); //RTC时锟接筹拷始锟斤拷锟斤拷前时锟斤拷
 
     tmos_memset( &conf, 0, sizeof(bleClockConfig_t) );
     conf.ClockAccuracy = CLK_OSC32K ? 1000 : 50;

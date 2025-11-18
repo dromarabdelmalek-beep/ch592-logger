@@ -38,7 +38,7 @@ uint8_t HAL_SaveDeviceInfo(void)
 {
     uint32_t StartAddr;
 
-    if (DeviceInfo.InfoNum == DEVICEINFO_MAX) //flashÒÑ¾­´æ´¢Âú
+    if (DeviceInfo.InfoNum == DEVICEINFO_MAX) //flash is already full
     {
         if (EEPROM_ERASE(DEVICEINFO_ADDR, DEVICEINFO_FLASH_SIZE) != SUCCESS)
         {
@@ -51,7 +51,7 @@ uint8_t HAL_SaveDeviceInfo(void)
     StartAddr = DEVICEINFO_ADDR + DEVICEINFO_LEN * DeviceInfo.InfoNum;
     ++DeviceInfo.InfoNum; //Add in advance and need to save it in flash
     DeviceInfo.Checksum = HAL_FlashChecksumCalculate((uint8_t*)&DeviceInfo, DEVICEINFO_LEN-1);
-    if (EEPROM_WRITE(StartAddr, &DeviceInfo, DEVICEINFO_LEN) != SUCCESS) //Ð´flash
+    if (EEPROM_WRITE(StartAddr, &DeviceInfo, DEVICEINFO_LEN) != SUCCESS) //write to flash
     {
         --DeviceInfo.InfoNum;
         LOG_INFO("ERROR2\n");
@@ -89,7 +89,7 @@ uint8_t HAL_ReadDeviceInfo(void)
     }
 
     StartAddr = DEVICEINFO_ADDR + (BufNum - 2) * DEVICEINFO_LEN;
-    EEPROM_READ(StartAddr, &DeviceInfo, DEVICEINFO_LEN); //Read device information in flash
+    EEPROM_READ(StartAddr, &DeviceInfo, DEVICEINFO_LEN); //Read device information from flash
     if ((DeviceInfo.CheckFlag != CHECK_VALUE) || (HAL_FlashChecksumCheck((uint8_t*)&DeviceInfo, DEVICEINFO_LEN-1))) //If device information has not been saved
     {
         tmos_memset((uint8_t*)&DeviceInfo, 0, DEVICEINFO_LEN);

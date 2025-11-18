@@ -3,7 +3,8 @@
  * Author             : WCH
  * Version            : V1.2
  * Date               : 2022/01/18
- * Description        : 配置说明及默认值，建议在工程配置里的预处理中修改当前值
+ * Description        : Configuration parameter default values, can be modified by defining
+ *                      preprocessor symbols before compiling to change current values
  *********************************************************************************
  * Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
  * Attention: This software (modified or not) and binary are used for 
@@ -27,53 +28,55 @@
 #include "CH59x_common.h"
 
 /*********************************************************************
- 【MAC】
- BLE_MAC                                    - 是否自定义蓝牙Mac地址 ( 默认:FALSE - 使用芯片Mac地址 )，需要在main.c修改Mac地址定义
+ MAC Configuration:
+ BLE_MAC                                    - Whether to customize Mac address (Default: FALSE - use chip Mac address),
+                                              need to modify Mac address in main.c
 
- 【DCDC】
- DCDC_ENABLE                                - 是否使能DCDC ( 默认:FALSE )
+ DCDC Configuration:
+ DCDC_ENABLE                                - Whether to enable DCDC (Default: FALSE)
 
- 【SLEEP】
- HAL_SLEEP                                  - 是否开启睡眠功能 ( 默认:FALSE )
- SLEEP_RTC_MIN_TIME                         - 非空闲模式下睡眠的最小时间（单位：一个RTC周期）
- SLEEP_RTC_MAX_TIME                         - 非空闲模式下睡眠的最大时间（单位：一个RTC周期）
- WAKE_UP_RTC_MAX_TIME                       - 等待32M晶振稳定时间（单位：一个RTC周期）
-                                                                                                                            根据不同睡眠类型取值可分为： 睡眠模式/下电模式  - 45 (默认)
-                                                                                                                                                                                                  暂停模式    - 45
-                                                                                                                                                                                                  空闲模式    - 5
- 【TEMPERATION】
- TEM_SAMPLE                                 - 是否打开根据温度变化校准的功能，单次校准耗时小于10ms( 默认:TRUE )
- 
- 【CALIBRATION】
- BLE_CALIBRATION_ENABLE                     - 是否打开定时校准的功能，单次校准耗时小于10ms( 默认:TRUE )
- BLE_CALIBRATION_PERIOD                     - 定时校准的周期，单位ms( 默认:120000 )
- 
- 【SNV】
- BLE_SNV                                    - 是否开启SNV功能，用于储存绑定信息( 默认:TRUE )
- BLE_SNV_ADDR                               - SNV信息保存地址，使用data flash最后512字节( 默认:0x77E00 )
- BLE_SNV_BLOCK                              - SNV信息保存块大小( 默认:256 )
- BLE_SNV_NUM                                - SNV信息保存数量( 默认:1 )
+ SLEEP Configuration:
+ HAL_SLEEP                                  - Whether to enable sleep function (Default: FALSE)
+ SLEEP_RTC_MIN_TIME                         - Minimum sleep time in idle mode (unit: one RTC cycle)
+ SLEEP_RTC_MAX_TIME                         - Maximum sleep time in idle mode (unit: one RTC cycle)
+ WAKE_UP_RTC_MAX_TIME                       - Wait time for 32M crystal stabilization (unit: one RTC cycle)
+                                              Values vary by sleep mode: Sleep/Shutdown mode - 45 (Default)
+                                                                         Halt mode - 45
+                                                                         Idle mode - 5
+ TEMPERATURE:
+ TEM_SAMPLE                                 - Whether to enable temperature change calibration (calibration time < 10ms) (Default: TRUE)
 
- 【RTC】
- CLK_OSC32K                                 - RTC时钟选择，如包含主机角色必须使用外部32K( 0 外部(32768Hz)，默认:1：内部(32000Hz)，2：内部(32768Hz) )
+ CALIBRATION:
+ BLE_CALIBRATION_ENABLE                     - Whether to enable periodic calibration (calibration time < 10ms) (Default: TRUE)
+ BLE_CALIBRATION_PERIOD                     - Periodic calibration interval, unit: ms (Default: 120000)
 
- 【MEMORY】
- BLE_MEMHEAP_SIZE                           - 蓝牙协议栈使用的RAM大小，不小于6K ( 默认:(1024*6) )
+ SNV (Simple Non-Volatile Storage):
+ BLE_SNV                                    - Whether to enable SNV function for storing bonding information (Default: TRUE)
+ BLE_SNV_ADDR                               - SNV information storage address, uses 512 bytes of data flash (Default: 0x77E00)
+ BLE_SNV_BLOCK                              - SNV information block size (Default: 256)
+ BLE_SNV_NUM                                - SNV information block count (Default: 1)
 
- 【DATA】
- BLE_BUFF_MAX_LEN                           - 单个连接最大包长度( 默认:27 (ATT_MTU=23)，取值范围[27~516] )
- BLE_BUFF_NUM                               - 控制器缓存的包数量( 默认:5 )
- BLE_TX_NUM_EVENT                           - 单个连接事件最多可以发多少个数据包( 默认:1 )
- BLE_TX_POWER                               - 发射功率( 默认:LL_TX_POWEER_0_DBM (0dBm) )
- 
- 【MULTICONN】
- PERIPHERAL_MAX_CONNECTION                  - 最多可同时做多少从机角色( 默认:1 )
- CENTRAL_MAX_CONNECTION                     - 最多可同时做多少主机角色( 默认:3 )
+ RTC Configuration:
+ CLK_OSC32K                                 - RTC clock selection, low power mode uses external 32K
+                                              (0: External 32768Hz, Default: 1: Internal 32000Hz, 2: Internal 32768Hz)
+
+ MEMORY Configuration:
+ BLE_MEMHEAP_SIZE                           - RAM size used by BLE protocol stack, minimum 6K (Default: 1024*6)
+
+ DATA Configuration:
+ BLE_BUFF_MAX_LEN                           - Single connection data packet length (Default: 27 (ATT_MTU=23), range [27~516])
+ BLE_BUFF_NUM                               - Single connection data packet count (Default: 5)
+ BLE_TX_NUM_EVENT                           - Number of data packets that can be sent per connection event (Default: 1)
+ BLE_TX_POWER                               - Transmit power (Default: LL_TX_POWEER_0_DBM (0dBm))
+
+ MULTICONN (Multi-Connection):
+ PERIPHERAL_MAX_CONNECTION                  - Maximum number of simultaneous peripheral roles (Default: 1)
+ CENTRAL_MAX_CONNECTION                     - Maximum number of simultaneous central roles (Default: 3)
 
  **********************************************************************/
 
 /*********************************************************************
- * 默认配置值
+ * Default configuration values
  */
 #ifndef BLE_MAC
 #define BLE_MAC                             FALSE
@@ -121,7 +124,7 @@
 #define BLE_SNV_NUM                         1
 #endif
 #ifndef CLK_OSC32K
-#define CLK_OSC32K                          1   // 该项请勿在此修改，必须在工程配置里的预处理中修改，如包含主机角色必须使用外部32K
+#define CLK_OSC32K                          1   // Cannot be modified here, must be modified by defining preprocessor symbols before compiling; low power mode uses external 32K
 #endif
 #ifndef BLE_MEMHEAP_SIZE
 #define BLE_MEMHEAP_SIZE                    (1024*6)
